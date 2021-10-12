@@ -57,7 +57,7 @@ for line in lines:
         continue
     line = re.sub("<.*?>", " ", line)  # убираем <...>
     line = re.sub(r"\(.*?\)", " ", line)  # убираем (0-9)
-    line = re.sub(r"[^\w’\-—«»]", ";", line)
+    line = re.sub(r"[^\w’\-—«»]", ";", line)  # убираем все кроме букв, цифр, - , — , « , » , ’
     tmp = re.split(r";{2,}", line)
     tokens = []
     for i in tmp:
