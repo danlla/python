@@ -1,12 +1,12 @@
-
-
+from parser_args import *
 def main():
-    args = ParserArgs()
-    reader = Reader(args.input_file)
+    pars = ParserArgs()
+    args = pars.get_args()
+    reader = Reader(args['input'])
     data = reader.read()
     validator = Validator(data)
     data_v = validor.validate()
-    writer = Writer(args.output_file)
+    writer = Writer(args['output'])
     writer.write(data_v)
 
     print("Count valid notes: {}".format(len(data_v)))
