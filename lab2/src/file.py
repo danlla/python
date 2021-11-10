@@ -1,14 +1,10 @@
 import pathlib
 import json
-
-class Person:
-    def __init__(self, person_map):
-        for k,v in person_map.items():
-            setattr(k,v)
+from person import Person
 
 
 class Reader:
-    def __init__(self, input_file:pathlib.Path):
+    def __init__(self, input_file: pathlib.Path):
         self.path = input_file
 
     def read(self):
@@ -16,8 +12,9 @@ class Reader:
 
 
 class Writer:
-    def __init__(self, output_file:pathlib.Path):
+    def __init__(self, output_file: pathlib.Path):
         self.path = output_file
 
     def write(self, data):
-        json.dump(data, self.path.open(mode = 'w'), indent = 4)
+        json.dump([i.__dict__ for i in data], self.path.open(
+            mode='w', encoding='windows-1251'), indent=4, ensure_ascii=False)
