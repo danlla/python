@@ -4,6 +4,9 @@ import tqdm
 
 
 class RegexpPerson:
+    """
+    Класс регулярных выражений, которые нужны для валидации полей класса Person
+    """
     def __init__(self):
         self.reg = {
             "telephone": r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$',
@@ -17,16 +20,34 @@ class RegexpPerson:
             "address": r'^([а-я]|\s|[А-Я]|\.)+\s[1-9][0-9]*[а-я]?$'
         }
 
-    def valid(self, k, v):
+    def valid(self, k, v) -> bool:
+        """
+        Проверяет валидность данных
+        :param:
+        k: ключ
+        v: значение
+        """
         return re.match(self.reg[k], str(v)) is not None
 
 
 class Validator:
+    """
+    Класс для проверки валидности данных
+    """
     def __init__(self, data):
+        """
+        :param:
+        data: данные
+        """
         self.data = data
         self.count_err = {}
 
-    def validate(self, reg_exp):
+    def validate(self, reg_exp) -> list:
+        """
+        Возращает лист с валидными данными
+        :param:
+        reg_exp: набор регулярных выражений для проверки валидности
+        """
         data_v = []
         with tqdm.tqdm(total=len(self.data), desc='validate...') as bar:
             for i in self.data:
@@ -42,5 +63,8 @@ class Validator:
                 bar.update(1)
         return data_v
 
-    def get_count_err(self):
+    def get_count_err(self) -> dict:
+        """
+        Возвращает словарь из типов невалидных записей и их количества
+        """
         return self.count_err
