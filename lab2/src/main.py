@@ -1,4 +1,6 @@
 from parser_args import *
+from file import Reader, Writer
+
 def main():
     pars = ParserArgs()
     args = pars.get_args()
