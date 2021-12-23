@@ -1,3 +1,6 @@
+from gen_key import generation_key, encryption_key
+from encrypt import encryption
+from decrypt import decryption
 import json
 import os
 
@@ -11,27 +14,29 @@ if __name__ == '__main__':
         'private_key': 'private_key.pem',
 
     }
-    with open('settings.json', 'w') as fp:
+    with open('../settings.json', mode='w') as fp:
         json.dump(settings, fp)
-    with open('settings.json') as json_file:
+    with open('../settings.json') as json_file:
         json_data = json.load(json_file)
 
     iv = os.urandom(16)
 
     while True:
-        print("generate keys - k")
+        print("\ngenerate keys - g")
         print("encrypt text - e")
         print("decrypt text - d")
-        ch = input("Chose k,e or d ")
-        if ch == "k":
-            generation_key(settings, 16)
+        print("escape - q")
+        choice = input("Chose g,e,d or q: ")
+        if choice == "g":
+            generation_key(settings)
             encryption_key(settings)
-            break
 
-        elif ch == "e":
+        elif choice == "e":
             encryption(settings, iv)
 
-        elif ch == "d":
+        elif choice == "d":
             decryption(settings, iv)
+        elif choice == "q":
+            break
         else:
-            print("Not found")
+            print("not found")
