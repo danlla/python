@@ -8,7 +8,7 @@ def encryption(setting: dict, iv: bytes):
 
     with open(setting['symmetric_key'], mode='rb') as key_file:
         key = key_file.read()
-    ds_key = decryption_key(setting, key)
+    sym_key = decryption_key(setting, key)
 
     with open(setting['initial_file'], mode='r', encoding='UTF-8') as file:
         res = file.read()
@@ -16,7 +16,7 @@ def encryption(setting: dict, iv: bytes):
     pad = pd.ANSIX923(128).padder()
     text = bytes(res, 'UTF-8')
     padded_text = pad.update(text) + pad.finalize()
-    cipher = Cipher(algorithms.SEED(ds_key), modes.CBC(iv))
+    cipher = Cipher(algorithms.SEED(sym_key), modes.CBC(iv))
     encryptor = cipher.encryptor()
     encrypted_text = encryptor.update(padded_text) + encryptor.finalize()
 
